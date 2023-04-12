@@ -6,13 +6,13 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "EveryThing_365.Data/1.0.0": {
+      "Everything_365.Data/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.15",
           "Microsoft.EntityFrameworkCore.Tools": "6.0.15"
         },
         "runtime": {
-          "EveryThing_365.Data.dll": {}
+          "Everything_365.Data.dll": {}
         }
       },
       "Humanizer.Core/2.8.26": {
@@ -491,7 +491,7 @@
     }
   },
   "libraries": {
-    "EveryThing_365.Data/1.0.0": {
+    "Everything_365.Data/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -12,7 +12,7 @@ namespace Everything_365.Data.DataContext
         {
         }
 
-        public EveryThing365DbContext(DbContextOptions<DbContext> options)
+        public EveryThing365DbContext(DbContextOptions<EveryThing365DbContext> options)
             : base(options)
         {
         }

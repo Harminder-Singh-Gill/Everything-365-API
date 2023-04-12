@@ -9,6 +9,7 @@
       "Everything_365.API/1.0.0": {
         "dependencies": {
           "Everything_365.Data": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "6.0.15",
           "Microsoft.EntityFrameworkCore.Design": "6.0.15",
           "Swashbuckle.AspNetCore": "6.2.3"
         },
@@ -492,7 +493,7 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.15"
         },
         "runtime": {
-          "EveryThing_365.Data.dll": {}
+          "Everything_365.Data.dll": {}
         }
       }
     }

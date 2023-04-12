@@ -17,9 +17,7 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Database Connection\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
