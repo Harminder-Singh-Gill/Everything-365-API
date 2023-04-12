@@ -1,5 +1,6 @@
 use [Everything 365];
 
+-----------------------------------------------------11-04-23-----------------------------------------------------------
 CREATE TABLE customer
 (
   customer_id INT IDENTITY(1,1) NOT NULL,
@@ -20,6 +21,9 @@ CREATE TABLE country
   PRIMARY KEY(country_id)
 );
 
+
+---------------------------------------------------------------11-04-23---------------------------------------------------------
+
 CREATE TABLE customer_address
 (
     address_id INT IDENTITY(1,1) NOT NULL,
@@ -35,6 +39,9 @@ CREATE TABLE customer_address
 	PRIMARY KEY(address_id),
 );
 
+
+------------------------------------------------------------------11-04-23------------------------------------------------------
+
 CREATE TABLE supplier
 (
   supplier_id INT IDENTITY(1,1) NOT NULL,
@@ -48,6 +55,9 @@ CREATE TABLE supplier
   PRIMARY KEY(supplier_id)
 );
 
+
+----------------------------------------------------------------------11-04-23--------------------------------------------------
+
 CREATE TABLE store
 (
 	store_id INT IDENTITY(1,1) NOT NULL,
@@ -56,6 +66,9 @@ CREATE TABLE store
 	FOREIGN KEY(supplier_id) REFERENCES supplier(supplier_id),
 	PRIMARY KEY(store_id)
 );
+
+
+----------------------------------------------------------------------11-04-23--------------------------------------------------
 
 CREATE TABLE store_address
 (
@@ -72,6 +85,9 @@ CREATE TABLE store_address
 	PRIMARY KEY(address_id),
 );
 
+
+------------------------------------------------------------------------11-04-23------------------------------------------------
+
 CREATE TABLE product_category
 (
 	category_id INT IDENTITY(1,1) NOT NULL,
@@ -82,7 +98,10 @@ CREATE TABLE product_category
 );
 
 
+-------------------------------------------------------------------------11-04-23-----------------------------------------------
+
 --Table for product that will be display list.
+
 CREATE TABLE product
 (
 	product_id INT IDENTITY(1,1) NOT NULL,
@@ -93,7 +112,11 @@ CREATE TABLE product
 	PRIMARY KEY(product_id)
 );
 
+
+-------------------------------------------------------------------------11-04-23-----------------------------------------------
+
 --TABLE FOR INSTANCE OF PRODUCT 
+
 CREATE TABLE product_item
 (
 	product_item_id INT IDENTITY(1,1) NOT NULL,
@@ -106,6 +129,9 @@ CREATE TABLE product_item
 	PRIMARY KEY(product_item_id)
 );
 
+
+-------------------------------------------------------------------------11-04-23-----------------------------------------------
+
 CREATE TABLE shopping_cart
 (
 	cart_id INT IDENTITY(1,1) NOT NULL,
@@ -113,6 +139,9 @@ CREATE TABLE shopping_cart
 	FOREIGN KEY(customer_id) REFERENCES customer(customer_id),
 	PRIMARY KEY(cart_id)
 );
+
+
+-----------------------------------------------------------------------11-04-23-------------------------------------------------
 
 CREATE TABLE shopping_cart_item
 (
@@ -125,12 +154,17 @@ CREATE TABLE shopping_cart_item
 	PRIMARY KEY(cart_item_id)
 );
 
+
+--------------------------------------------------------------------11-04-23----------------------------------------------------
+
 CREATE TABLE payment_type
 (
   payment_type_id INT IDENTITY(1,1) NOT NULL,
   payment_value VARCHAR(50) DEFAULT NULL,
   PRIMARY KEY(payment_type_id)
 );
+
+------------------------------------------------------------------11-04-23------------------------------------------------------
 
 CREATE TABLE customer_payment
 (
@@ -146,12 +180,17 @@ CREATE TABLE customer_payment
 	PRIMARY KEY(payment_id)
 );
 
+------------------------------------------------------------------11-04-23----------------------------------------------------
+
 CREATE TABLE order_status 
 (
 	status_id INT IDENTITY(1,1) NOT NULL,
 	order_value VARCHAR(30) DEFAULT NULL, 
 	PRIMARY KEY(status_id),
 );
+
+
+--------------------------------------------------------------------11-04-23----------------------------------------------------
 
 CREATE TABLE customer_order
 (
@@ -171,6 +210,8 @@ CREATE TABLE customer_order
 	FOREIGN KEY(order_status_id) REFERENCES order_status(status_id),
 	PRIMARY KEY(order_id)
 );
+
+------------------------------------------------------------------------------------------------------------------------
 
 
 
