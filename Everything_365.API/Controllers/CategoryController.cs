@@ -2,6 +2,7 @@
 using Everything_365.Data.Custom_Models;
 using Microsoft.AspNetCore.Mvc;
 using Everything_365.Data.Repositories;
+using Everything_365.Data.Interfaces;
 
 namespace Everything_365.API.Controllers
 {
@@ -9,15 +10,15 @@ namespace Everything_365.API.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        CategoryRepository? categoryRepository;
+        ICategoryInterface? categoryInterface;
 
         [HttpGet]
         public List<ProductCategory> GetProductCategories()
         {
             try
             {
-                categoryRepository = new CategoryRepository();
-                return categoryRepository.GetProductCategories();
+                categoryInterface = new CategoryRepository();
+                return categoryInterface.GetProductCategories();
             }
             catch (Exception)
             {

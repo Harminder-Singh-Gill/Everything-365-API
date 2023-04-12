@@ -1,5 +1,6 @@
 ﻿using Everything_365.Data.Custom_Models;
 using Everything_365.Data.Database_Connection;
+using Everything_365.Data.Interfaces;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Everything_365.Data.Repositories
 {
-    public class CategoryRepository
+    public class CategoryRepository : ICategoryInterface
     {
         SqlCommand? cmd;
         public List<ProductCategory> GetProductCategories()
