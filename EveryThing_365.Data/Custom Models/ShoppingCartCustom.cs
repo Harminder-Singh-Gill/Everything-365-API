@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Everything_365.Data.Custom_Models
 {
-    public class ShoppingCart
+    public class ShoppingCartCustom
     {
         public int CartId { get; set; }
         public int? CustomerId { get; set; }

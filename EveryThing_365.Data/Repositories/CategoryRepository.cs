@@ -14,18 +14,18 @@ namespace Everything_365.Data.Repositories
     public class CategoryRepository : ICategoryInterface
     {
         private SqlCommand? Cmd { get; set; }
-        public List<ProductCategory> GetProductCategories()
+        public List<ProductCategoryCustom> GetProductCategories()
         {
             try
             {
-                List<ProductCategory> categories = new List<ProductCategory>();
+                List<ProductCategoryCustom> categories = new List<ProductCategoryCustom>();
                 Cmd = new SqlCommand();
                 DataSet dataSet = ClsDbConnection.GetDataSet("GetProductCategories", Cmd);
                 DataTable dt = dataSet.Tables[0];
                 if (dt.Rows.Count > 0)
                 {
                     categories = (from DataRow dr in dt.Rows
-                                  select new ProductCategory()
+                                  select new ProductCategoryCustom()
                                   {
                                       CategoryId = Convert.ToInt32(dr["category_id"].ToString() ?? String.Empty),
                                       ParentCategoryId = dr["parent_category_id"].Equals(DBNull.Value) ? null : 

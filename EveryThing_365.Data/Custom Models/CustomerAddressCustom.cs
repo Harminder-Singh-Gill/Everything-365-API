@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Everything_365.Data.Custom_Models
 {
-    public class CustomerAddress
+    public class CustomerAddressCustom
     {
         public int AddressId { get; set; }
         public int? CustomerId { get; set; }

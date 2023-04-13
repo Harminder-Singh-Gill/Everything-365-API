@@ -1,5 +1,7 @@
 ﻿using Everything_365.Data.Custom_Models;
+using Everything_365.Data.Models;
 using Everything_365.Data.Database_Connection;
+using Everything_365.Data.DataContext;
 using Everything_365.Data.Interfaces;
 using Microsoft.Data.SqlClient;
 using System;
@@ -15,7 +17,7 @@ namespace Everything_365.Data.Repositories
     {
         private SqlCommand? Cmd { get; set; }
 
-        public string AddNewCustomer(Customer customer)
+        public string AddNewCustomer(CustomerCustom customer)
         {
             try
             {
@@ -62,6 +64,24 @@ namespace Everything_365.Data.Repositories
             {
                 throw;
             }
+        }
+
+        public Customer GetCustomerDetailsById(EveryThing365DbContext context, int CustomerId)
+        {
+            Customer customers = new Customer();
+            if (context is null || CustomerId == 0)
+            {
+                return customers;
+            }
+            customers = context.Customers.Find(CustomerId) ?? new Customer();
+            if (customers.ToString() != "{}")
+            {
+                customers.CustomerAddresses = context.CustomerAddresses.Where
+                    (c =>  c.CustomerId == CustomerId).ToList() 
+                    ?? new List<CustomerAddress>();
+                return customers;
+            }
+            return customers;
         }
     }
 }

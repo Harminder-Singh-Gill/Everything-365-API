@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Everything_365.Data.Custom_Models
 {
-    public class Customer
+    public class CustomerCustom
     {
         public int CustomerId { get; set; }
         public string? FirstName { get; set; }
@@ -14,7 +14,7 @@ namespace Everything_365.Data.Custom_Models
         public string? Password { get; set; }
         public string? EmailAddress { get; set; }
         public string? PhoneNumber { get; set; }
-        public List<CustomerAddress>? Address { get; set; }
+        public List<CustomerAddressCustom>? Address { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? ModifiedAt { get; set; }
     }

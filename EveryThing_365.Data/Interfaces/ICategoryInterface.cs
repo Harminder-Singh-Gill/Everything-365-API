@@ -10,6 +10,6 @@ namespace Everything_365.Data.Interfaces
   
     public interface ICategoryInterface
     {
-        public List<ProductCategory> GetProductCategories();
+        public List<ProductCategoryCustom> GetProductCategories();
     }
 }

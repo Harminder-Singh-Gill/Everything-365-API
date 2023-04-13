@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Everything_365.Data.Custom_Models
 {
-    public class ProductCategory
+    public class ProductCategoryCustom
     {
         public int CategoryId { get; set; }
         public int? ParentCategoryId { get; set; }

@@ -13,7 +13,7 @@ namespace Everything_365.API.Controllers
         private ICategoryInterface? CategoryInterface { get; set; }
 
         [HttpGet]
-        public List<ProductCategory> GetProductCategories()
+        public List<ProductCategoryCustom> GetProductCategories()
         {
             try
             {
