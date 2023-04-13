@@ -45,16 +45,19 @@ namespace Everything_365.Data.Repositories
         {
             Customer customer = new Customer();
 
-            customer = context.Customers.Where(c => c.EmailAddress == email && c.Password == password)
-                .FirstOrDefault() ?? new Customer();
+            customer = context.Customers.Where(c => c.EmailAddress == email).FirstOrDefault() ?? new Customer();
 
             if (customer.CustomerId == 0 || customer.EmailAddress == null || customer.Password == null)
             {
-                return "Invalid Email or Password";
+                return "Invalid Email";
             }
-            if (customer.EmailAddress.ToLower() != email.ToLower() || customer.Password != password)
+            if (customer.EmailAddress.ToLower() != email.ToLower())
             {
-                return "Invalid Email or Password";
+                return "Invalid Email";
+            }
+            if(customer.Password != password)
+            {
+                return "Invalid Password";
             }
             return "Token";
 
