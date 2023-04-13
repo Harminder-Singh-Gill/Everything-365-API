@@ -10,15 +10,15 @@ namespace Everything_365.API.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        ICategoryInterface? categoryInterface;
+        private ICategoryInterface? CategoryInterface { get; set; }
 
         [HttpGet]
         public List<ProductCategory> GetProductCategories()
         {
             try
             {
-                categoryInterface = new CategoryRepository();
-                return categoryInterface.GetProductCategories();
+                CategoryInterface = new CategoryRepository();
+                return CategoryInterface.GetProductCategories();
             }
             catch (Exception)
             {

@@ -13,14 +13,14 @@ namespace Everything_365.Data.Repositories
 {
     public class CategoryRepository : ICategoryInterface
     {
-        SqlCommand? cmd;
+        private SqlCommand? Cmd { get; set; }
         public List<ProductCategory> GetProductCategories()
         {
             try
             {
                 List<ProductCategory> categories = new List<ProductCategory>();
-                cmd = new SqlCommand();
-                DataSet dataSet = ClsDbConnection.GetDataSet("GetProductCategories", cmd);
+                Cmd = new SqlCommand();
+                DataSet dataSet = ClsDbConnection.GetDataSet("GetProductCategories", Cmd);
                 DataTable dt = dataSet.Tables[0];
                 if (dt.Rows.Count > 0)
                 {

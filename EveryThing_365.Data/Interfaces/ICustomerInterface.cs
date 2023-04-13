@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Everything_365.Data.Interfaces
 {
-  
-    public interface ICategoryInterface
+    public interface ICustomerInterface
     {
-        public List<ProductCategory> GetProductCategories();
+        public string AddNewCustomer(Customer customer);
     }
 }

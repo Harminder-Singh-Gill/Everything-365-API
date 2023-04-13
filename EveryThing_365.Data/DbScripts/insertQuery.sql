@@ -15,4 +15,7 @@ Insert into product_category(category_id, parent_category_id, category_name) val
 Insert into product_category(category_id, parent_category_id, category_name) values(10, 6,'Baby Accessories');
 SET IDENTITY_INSERT product_category OFF;
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------12-04-23----------------------------------------------------------------------------------------------
+SET IDENTITY_INSERT country on;
+Insert into country(country_id, country_name) values(1, 'India');
+SET IDENTITY_INSERT country off;
