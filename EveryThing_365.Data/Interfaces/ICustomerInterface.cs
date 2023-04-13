@@ -13,5 +13,6 @@ namespace Everything_365.Data.Interfaces
     {
         public string AddNewCustomer(CustomerCustom customer);
         public Customer GetCustomerDetailsById(EveryThing365DbContext context, int customerId);
+       
     }
 }

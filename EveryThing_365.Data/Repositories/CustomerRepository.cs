@@ -68,20 +68,19 @@ namespace Everything_365.Data.Repositories
 
         public Customer GetCustomerDetailsById(EveryThing365DbContext context, int CustomerId)
         {
-            Customer customers = new Customer();
-            if (context is null || CustomerId == 0)
+            Customer customer = new Customer();
+            if (context is null)
             {
-                return customers;
+                return customer;
             }
-            customers = context.Customers.Find(CustomerId) ?? new Customer();
-            if (customers.ToString() != "{}")
+            customer = context.Customers.Where(c => c.CustomerId == CustomerId).FirstOrDefault() ?? new Customer();
+            if (customer.CustomerId == 0)
             {
-                customers.CustomerAddresses = context.CustomerAddresses.Where
-                    (c =>  c.CustomerId == CustomerId).ToList() 
-                    ?? new List<CustomerAddress>();
-                return customers;
+                return customer;
             }
-            return customers;
+            customer.CustomerAddresses = context.CustomerAddresses.Where(c => c.CustomerId == CustomerId).ToList() 
+                ?? new List<CustomerAddress>();
+            return customer;
         }
     }
 }
