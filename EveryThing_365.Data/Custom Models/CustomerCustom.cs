@@ -18,4 +18,21 @@ namespace Everything_365.Data.Custom_Models
         public DateTime? CreatedAt { get; set; }
         public DateTime? ModifiedAt { get; set; }
     }
+
+    public class CustomerLogin
+    {
+        public string? EmailAddress { get; set; }
+        public string? Password { get; set; }
+    }
+
+    public class CheckCustomerEmail
+    {
+        public string? EmailAddress { get; set; }
+    }
+
+    public class CheckCustomerPhone
+    {
+        public string? PhoneNumber { get; set; }
+    }
+
 }

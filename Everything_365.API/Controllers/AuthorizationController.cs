@@ -1,4 +1,5 @@
-﻿using Everything_365.Data.DataContext;
+﻿using Everything_365.Data.Custom_Models;
+using Everything_365.Data.DataContext;
 using Everything_365.Data.Interfaces;
 using Everything_365.Data.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -19,24 +20,24 @@ namespace Everything_365.API.Controllers
         }
 
         [HttpPost]
-        public string CheckCustomerEmail(string email)
+        public string CheckCustomerEmail(CheckCustomerEmail customer)
         {
             AuthInterface = new AuthorizationRepository();
-            return AuthInterface.CheckCustomerEmail(Context, email);
+            return AuthInterface.CheckCustomerEmail(Context, customer);
         }
 
         [HttpPost]
-        public string CheckCustomerPhoneNumber(string phoneNumber)
+        public string CheckCustomerPhoneNumber(CheckCustomerPhone customer)
         {
             AuthInterface = new AuthorizationRepository();
-            return AuthInterface.CheckCustomerPhoneNumber(Context, phoneNumber);
+            return AuthInterface.CheckCustomerPhoneNumber(Context, customer);
         }
 
         [HttpPost]
-        public string CustomerLogin(string email, string password)
+        public string CustomerLogin(CustomerLogin loginDetails)
         {
             AuthInterface = new AuthorizationRepository();
-            return AuthInterface.CustomerLogin(Context, email, password);
+            return AuthInterface.CustomerLogin(Context, loginDetails);
         }
 
     }
