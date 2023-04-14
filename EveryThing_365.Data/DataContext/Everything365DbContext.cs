@@ -37,7 +37,7 @@ namespace Everything_365.Data.DataContext
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server = localhost; Database = EveryThing 365; Trusted_Connection = true; TrustServerCertificate = True;");
+                optionsBuilder.UseSqlServer("Server=192.168.1.197; Database = EveryThing_365; User Id = Admin; Password =Admin123; Initial Catalog=EveryThing_365;");
             }
         }
 
@@ -47,7 +47,7 @@ namespace Everything_365.Data.DataContext
             {
                 entity.ToTable("country");
 
-                entity.HasIndex(e => e.CountryName, "UQ__country__F7018894AC04E0A4")
+                entity.HasIndex(e => e.CountryName, "UQ__country__F70188948424E57F")
                     .IsUnique();
 
                 entity.Property(e => e.CountryId).HasColumnName("country_id");
@@ -62,10 +62,10 @@ namespace Everything_365.Data.DataContext
             {
                 entity.ToTable("customer");
 
-                entity.HasIndex(e => e.EmailAddress, "UQ__customer__20C6DFF5EB6CF82D")
+                entity.HasIndex(e => e.EmailAddress, "UQ__customer__20C6DFF5D99D1062")
                     .IsUnique();
 
-                entity.HasIndex(e => e.PhoneNumber, "UQ__customer__A1936A6B42DF72D4")
+                entity.HasIndex(e => e.PhoneNumber, "UQ__customer__A1936A6B87CF47E3")
                     .IsUnique();
 
                 entity.Property(e => e.CustomerId).HasColumnName("customer_id");
@@ -107,7 +107,7 @@ namespace Everything_365.Data.DataContext
             modelBuilder.Entity<CustomerAddress>(entity =>
             {
                 entity.HasKey(e => e.AddressId)
-                    .HasName("PK__customer__CAA247C837FEB1FA");
+                    .HasName("PK__customer__CAA247C87CC72A2B");
 
                 entity.ToTable("customer_address");
 
@@ -142,18 +142,18 @@ namespace Everything_365.Data.DataContext
                 entity.HasOne(d => d.Country)
                     .WithMany(p => p.CustomerAddresses)
                     .HasForeignKey(d => d.CountryId)
-                    .HasConstraintName("FK__customer___count__4CA06362");
+                    .HasConstraintName("FK__customer___count__3A81B327");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.CustomerAddresses)
                     .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__customer___custo__4BAC3F29");
+                    .HasConstraintName("FK__customer___custo__398D8EEE");
             });
 
             modelBuilder.Entity<CustomerOrder>(entity =>
             {
                 entity.HasKey(e => e.OrderId)
-                    .HasName("PK__customer__4659622991F05E66");
+                    .HasName("PK__customer__46596229E7D703C7");
 
                 entity.ToTable("customer_order");
 
@@ -180,33 +180,33 @@ namespace Everything_365.Data.DataContext
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.CustomerOrders)
                     .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__customer___custo__1EA48E88");
+                    .HasConstraintName("FK__customer___custo__0C85DE4D");
 
                 entity.HasOne(d => d.OrderStatus)
                     .WithMany(p => p.CustomerOrders)
                     .HasForeignKey(d => d.OrderStatusId)
-                    .HasConstraintName("FK__customer___order__22751F6C");
+                    .HasConstraintName("FK__customer___order__10566F31");
 
                 entity.HasOne(d => d.Payment)
                     .WithMany(p => p.CustomerOrders)
                     .HasForeignKey(d => d.PaymentId)
-                    .HasConstraintName("FK__customer___payme__208CD6FA");
+                    .HasConstraintName("FK__customer___payme__0E6E26BF");
 
                 entity.HasOne(d => d.ProductItem)
                     .WithMany(p => p.CustomerOrders)
                     .HasForeignKey(d => d.ProductItemId)
-                    .HasConstraintName("FK__customer___produ__1F98B2C1");
+                    .HasConstraintName("FK__customer___produ__0D7A0286");
 
                 entity.HasOne(d => d.Shipping)
                     .WithMany(p => p.CustomerOrders)
                     .HasForeignKey(d => d.ShippingId)
-                    .HasConstraintName("FK__customer___shipp__2180FB33");
+                    .HasConstraintName("FK__customer___shipp__0F624AF8");
             });
 
             modelBuilder.Entity<CustomerPayment>(entity =>
             {
                 entity.HasKey(e => e.PaymentId)
-                    .HasName("PK__customer__ED1FC9EAF66A8881");
+                    .HasName("PK__customer__ED1FC9EAD6427F02");
 
                 entity.ToTable("customer_payment");
 
@@ -235,18 +235,18 @@ namespace Everything_365.Data.DataContext
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.CustomerPayments)
                     .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__customer___custo__10566F31");
+                    .HasConstraintName("FK__customer___custo__7E37BEF6");
 
                 entity.HasOne(d => d.PaymentType)
                     .WithMany(p => p.CustomerPayments)
                     .HasForeignKey(d => d.PaymentTypeId)
-                    .HasConstraintName("FK__customer___payme__114A936A");
+                    .HasConstraintName("FK__customer___payme__7F2BE32F");
             });
 
             modelBuilder.Entity<OrderStatus>(entity =>
             {
                 entity.HasKey(e => e.StatusId)
-                    .HasName("PK__order_st__3683B5311ED11FBA");
+                    .HasName("PK__order_st__3683B53181B42BD3");
 
                 entity.ToTable("order_status");
 
@@ -274,7 +274,7 @@ namespace Everything_365.Data.DataContext
             {
                 entity.ToTable("product");
 
-                entity.HasIndex(e => e.ProductName, "UQ__product__2B5A6A5F7CEB7C6E")
+                entity.HasIndex(e => e.ProductName, "UQ__product__2B5A6A5FA566C710")
                     .IsUnique();
 
                 entity.Property(e => e.ProductId).HasColumnName("product_id");
@@ -294,17 +294,17 @@ namespace Everything_365.Data.DataContext
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK__product__categor__72C60C4A");
+                    .HasConstraintName("FK__product__categor__60A75C0F");
             });
 
             modelBuilder.Entity<ProductCategory>(entity =>
             {
                 entity.HasKey(e => e.CategoryId)
-                    .HasName("PK__product___D54EE9B40B37AD10");
+                    .HasName("PK__product___D54EE9B407EEBA8C");
 
                 entity.ToTable("product_category");
 
-                entity.HasIndex(e => e.CategoryName, "UQ__product___5189E25588F4B744")
+                entity.HasIndex(e => e.CategoryName, "UQ__product___5189E25533FCA2F2")
                     .IsUnique();
 
                 entity.Property(e => e.CategoryId).HasColumnName("category_id");
@@ -319,7 +319,7 @@ namespace Everything_365.Data.DataContext
                 entity.HasOne(d => d.ParentCategory)
                     .WithMany(p => p.InverseParentCategory)
                     .HasForeignKey(d => d.ParentCategoryId)
-                    .HasConstraintName("FK__product_c__paren__6C190EBB");
+                    .HasConstraintName("FK__product_c__paren__59FA5E80");
             });
 
             modelBuilder.Entity<ProductItem>(entity =>
@@ -339,18 +339,18 @@ namespace Everything_365.Data.DataContext
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.ProductItems)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__product_i__produ__797309D9");
+                    .HasConstraintName("FK__product_i__produ__6754599E");
 
                 entity.HasOne(d => d.Store)
                     .WithMany(p => p.ProductItems)
                     .HasForeignKey(d => d.StoreId)
-                    .HasConstraintName("FK__product_i__store__7A672E12");
+                    .HasConstraintName("FK__product_i__store__68487DD7");
             });
 
             modelBuilder.Entity<ShoppingCart>(entity =>
             {
                 entity.HasKey(e => e.CartId)
-                    .HasName("PK__shopping__2EF52A27CBBF23A2");
+                    .HasName("PK__shopping__2EF52A2707556D3C");
 
                 entity.ToTable("shopping_cart");
 
@@ -361,13 +361,13 @@ namespace Everything_365.Data.DataContext
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.ShoppingCarts)
                     .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__shopping___custo__7E37BEF6");
+                    .HasConstraintName("FK__shopping___custo__6C190EBB");
             });
 
             modelBuilder.Entity<ShoppingCartItem>(entity =>
             {
                 entity.HasKey(e => e.CartItemId)
-                    .HasName("PK__shopping__5D9A6C6E91F527CF");
+                    .HasName("PK__shopping__5D9A6C6E4A51217A");
 
                 entity.ToTable("shopping_cart_item");
 
@@ -382,12 +382,12 @@ namespace Everything_365.Data.DataContext
                 entity.HasOne(d => d.Cart)
                     .WithMany(p => p.ShoppingCartItems)
                     .HasForeignKey(d => d.CartId)
-                    .HasConstraintName("FK__shopping___cart___03F0984C");
+                    .HasConstraintName("FK__shopping___cart___71D1E811");
 
                 entity.HasOne(d => d.ProductItem)
                     .WithMany(p => p.ShoppingCartItems)
                     .HasForeignKey(d => d.ProductItemId)
-                    .HasConstraintName("FK__shopping___produ__04E4BC85");
+                    .HasConstraintName("FK__shopping___produ__72C60C4A");
             });
 
             modelBuilder.Entity<Store>(entity =>
@@ -406,13 +406,13 @@ namespace Everything_365.Data.DataContext
                 entity.HasOne(d => d.Supplier)
                     .WithMany(p => p.Stores)
                     .HasForeignKey(d => d.SupplierId)
-                    .HasConstraintName("FK__store__supplier___5BE2A6F2");
+                    .HasConstraintName("FK__store__supplier___49C3F6B7");
             });
 
             modelBuilder.Entity<StoreAddress>(entity =>
             {
                 entity.HasKey(e => e.AddressId)
-                    .HasName("PK__store_ad__CAA247C8BFFC1536");
+                    .HasName("PK__store_ad__CAA247C8EFC13E65");
 
                 entity.ToTable("store_address");
 
@@ -447,22 +447,22 @@ namespace Everything_365.Data.DataContext
                 entity.HasOne(d => d.Country)
                     .WithMany(p => p.StoreAddresses)
                     .HasForeignKey(d => d.CountryId)
-                    .HasConstraintName("FK__store_add__count__66603565");
+                    .HasConstraintName("FK__store_add__count__5441852A");
 
                 entity.HasOne(d => d.Store)
                     .WithMany(p => p.StoreAddresses)
                     .HasForeignKey(d => d.StoreId)
-                    .HasConstraintName("FK__store_add__store__656C112C");
+                    .HasConstraintName("FK__store_add__store__534D60F1");
             });
 
             modelBuilder.Entity<Supplier>(entity =>
             {
                 entity.ToTable("supplier");
 
-                entity.HasIndex(e => e.EmailAddress, "UQ__supplier__20C6DFF5DD23238E")
+                entity.HasIndex(e => e.EmailAddress, "UQ__supplier__20C6DFF55A47ED0F")
                     .IsUnique();
 
-                entity.HasIndex(e => e.PhoneNumber, "UQ__supplier__A1936A6B5C1E35D2")
+                entity.HasIndex(e => e.PhoneNumber, "UQ__supplier__A1936A6B5DD8893C")
                     .IsUnique();
 
                 entity.Property(e => e.SupplierId).HasColumnName("supplier_id");
