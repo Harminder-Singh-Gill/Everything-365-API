@@ -100,35 +100,52 @@ CREATE TABLE product_category
 
 -------------------------------------------------------------------------11-04-23-----------------------------------------------
 
---Table for product that will be display list.
-
 CREATE TABLE product
 (
 	product_id INT IDENTITY(1,1) NOT NULL,
 	category_id INT DEFAULT NULL,
-	product_name VARCHAR(30) DEFAULT NULL UNIQUE,
+	store_id INT DEFAULT NULL,
+	product_name VARCHAR(30) DEFAULT NULL,
 	product_description VARCHAR(300) DEFAULT NULL,
 	FOREIGN KEY(category_id) REFERENCES product_category(category_id),
+	FOREIGN KEY(store_id) REFERENCES store(store_id),
 	PRIMARY KEY(product_id)
 );
 
+-------------------------------------------------------------------------11-04-23-----------------------------------------------
+
+CREATE TABLE product_varaint
+(
+	product_varaint_id INT IDENTITY(1,1) NOT NULL,
+	product_id  INT DEFAULT NULL,
+	qty_in_stock INT DEFAULT NULL,
+	price DECIMAL DEFAULT NULL,
+	SKU VARCHAR(100) DEFAULT NULL,
+	FOREIGN KEY(product_id) REFERENCES product(product_id),
+	PRIMARY KEY(product_varaint_id)
+);
 
 -------------------------------------------------------------------------11-04-23-----------------------------------------------
 
---TABLE FOR INSTANCE OF PRODUCT 
-
-CREATE TABLE product_item
+CREATE TABLE variation
 (
-	product_item_id INT IDENTITY(1,1) NOT NULL,
-	product_id  INT DEFAULT NULL,
-	store_id INT DEFAULT NULL,
-	qty_in_stock INT DEFAULT NULL,
-	price INT DEFAULT NULL,
-	FOREIGN KEY(product_id) REFERENCES product(product_id),
-	FOREIGN KEY(store_id) REFERENCES store(store_id),
-	PRIMARY KEY(product_item_id)
+	variation_id INT IDENTITY(1,1) NOT NULL,
+	product_varaint_id INT DEFAULT NULL,
+	varaint_value VARCHAR(100) DEFAULT NULL,
+	FOREIGN KEY(product_varaint_id) REFERENCES product_varaint(product_varaint_id),
+	PRIMARY KEY(variation_id)
 );
 
+-------------------------------------------------------------------------11-04-23-----------------------------------------------
+
+CREATE TABLE variation_option
+(
+	variation_option_id INT IDENTITY(1,1) NOT NULL,
+	variation_id  INT DEFAULT NULL,
+	option_value VARCHAR(100) DEFAULT NULL,
+	FOREIGN KEY(variation_id ) REFERENCES variation(variation_id ),
+	PRIMARY KEY(variation_id)
+);
 
 -------------------------------------------------------------------------11-04-23-----------------------------------------------
 
@@ -147,10 +164,10 @@ CREATE TABLE shopping_cart_item
 (
 	cart_item_id INT IDENTITY(1,1) NOT NULL,
 	cart_id INT DEFAULT NULL,
-	product_item_id INT DEFAULT NULL,
+	product_varaint_id INT DEFAULT NULL,
 	quantity INT DEFAULT NULL,
 	FOREIGN KEY(cart_id) REFERENCES shopping_cart(cart_id),
-	FOREIGN KEY(product_item_id) REFERENCES product_item(product_item_id),
+	FOREIGN KEY(product_varaint_id) REFERENCES product_varaint(product_varaint_id),
 	PRIMARY KEY(cart_item_id)
 );
 
@@ -196,7 +213,7 @@ CREATE TABLE customer_order
 (
 	order_id INT IDENTITY(1,1) NOT NULL,
 	customer_id INT DEFAULT NULL,
-	product_item_id INT DEFAULT NULL,
+	product_varaint_id INT DEFAULT NULL,
 	quantity INT DEFAULT NULL,
 	payment_id INT DEFAULT NULL,
 	shipping_id INT DEFAULT NULL,
@@ -204,7 +221,7 @@ CREATE TABLE customer_order
 	order_date DATETIME DEFAULT NULL,
 	order_status_id INT DEFAULT NULL, 
 	FOREIGN KEY(customer_id) REFERENCES customer(customer_id),
-	FOREIGN KEY(product_item_id) REFERENCES product_item(product_item_id),
+	FOREIGN KEY(product_varaint_id) REFERENCES product_varaint(product_varaint_id),
 	FOREIGN KEY(payment_id) REFERENCES customer_payment(payment_id),
 	FOREIGN KEY(shipping_id) REFERENCES customer_address(address_id),
 	FOREIGN KEY(order_status_id) REFERENCES order_status(status_id),
