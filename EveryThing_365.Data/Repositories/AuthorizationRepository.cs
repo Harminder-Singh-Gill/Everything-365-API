@@ -66,7 +66,7 @@ namespace Everything_365.Data.Repositories
             {
                 return "Invalid Email";
             }
-            if (customer.EmailAddress.ToLower() != customerLoginDetails.EmailAddress.ToLower())
+            if (customer.EmailAddress != customerLoginDetails.EmailAddress)
             {
                 return "Invalid Email";
             }
