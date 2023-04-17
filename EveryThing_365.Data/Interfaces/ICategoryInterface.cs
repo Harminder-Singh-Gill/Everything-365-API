@@ -11,5 +11,6 @@ namespace Everything_365.Data.Interfaces
     public interface ICategoryInterface
     {
         public List<ProductCategoryCustom> GetProductCategories();
+        public List<ProductCategoryCustom> GetProductSubCategories(int parentCategoryId);
     }
 }

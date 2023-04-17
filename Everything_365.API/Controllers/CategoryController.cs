@@ -27,5 +27,19 @@ namespace Everything_365.API.Controllers
 
         }
 
+        [HttpGet]
+        public List<ProductCategoryCustom> GetProductSubCategories(int parentCategoryId)
+        {
+            try
+            {
+                CategoryInterface = new CategoryRepository();
+                return CategoryInterface.GetProductSubCategories(parentCategoryId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
     }
 }

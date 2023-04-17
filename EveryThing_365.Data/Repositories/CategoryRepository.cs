@@ -41,5 +41,34 @@ namespace Everything_365.Data.Repositories
                 throw;
             }
         }
+
+        public List<ProductCategoryCustom> GetProductSubCategories(int parentCategoryId)
+        {
+            try
+            {
+                List<ProductCategoryCustom> categories = new List<ProductCategoryCustom>();
+                Cmd = new SqlCommand();
+                Cmd.Parameters.Add("@parent_category_id", SqlDbType.Int).Value = parentCategoryId;
+                DataSet dataSet = ClsDbConnection.GetDataSet("GetProductSubCategories", Cmd);
+                DataTable dt = dataSet.Tables[0];
+                if (dt.Rows.Count > 0)
+                {
+                    categories = (from DataRow dr in dt.Rows
+                                  select new ProductCategoryCustom()
+                                  {
+                                      CategoryId = Convert.ToInt32(dr["category_id"].ToString() ?? String.Empty),
+                                      ParentCategoryId = dr["parent_category_id"].Equals(DBNull.Value) ? null :
+                                                         Convert.ToInt32(dr["parent_category_id"].ToString() ?? String.Empty),
+                                      CategoryName = dr["category_name"].Equals(DBNull.Value) ? null :
+                                                     (dr["category_name"].ToString() ?? String.Empty),
+                                  }).ToList();
+                }
+                return categories;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

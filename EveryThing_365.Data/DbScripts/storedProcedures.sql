@@ -11,7 +11,22 @@ CREATE PROCEDURE GetProductCategories
 AS
 BEGIN
 	SET NOCOUNT ON;
-	select * from product_category;
+	select * from product_category WHERE parent_category_id IS NULL;
+END
+
+---------------------------------------------12-04-23--------------------------------------------------------
+
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE GetProductSubCategories
+@parent_category_id int
+AS
+BEGIN
+	SET NOCOUNT ON;
+	select * from product_category WHERE parent_category_id  = @parent_category_id;
 END
 
 ---------------------------------------------12-04-23----------------------------------------------------------
