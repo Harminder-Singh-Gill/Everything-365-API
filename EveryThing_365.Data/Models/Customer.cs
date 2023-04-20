@@ -8,9 +8,7 @@ namespace Everything_365.Data.Models
         public Customer()
         {
             CustomerAddresses = new HashSet<CustomerAddress>();
-            CustomerOrders = new HashSet<CustomerOrder>();
             CustomerPayments = new HashSet<CustomerPayment>();
-            ShoppingCarts = new HashSet<ShoppingCart>();
         }
 
         public int CustomerId { get; set; }
@@ -22,9 +20,8 @@ namespace Everything_365.Data.Models
         public DateTime? CreatedAt { get; set; }
         public DateTime? ModifiedAt { get; set; }
 
+        public virtual ShoppingCart? ShoppingCart { get; set; }
         public virtual ICollection<CustomerAddress> CustomerAddresses { get; set; }
-        public virtual ICollection<CustomerOrder> CustomerOrders { get; set; }
         public virtual ICollection<CustomerPayment> CustomerPayments { get; set; }
-        public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace Everything_365.Data.Models
     {
         public Store()
         {
-            ProductItems = new HashSet<ProductItem>();
+            Products = new HashSet<Product>();
             StoreAddresses = new HashSet<StoreAddress>();
         }
 
@@ -16,7 +16,7 @@ namespace Everything_365.Data.Models
         public string? StoreName { get; set; }
 
         public virtual Supplier? Supplier { get; set; }
-        public virtual ICollection<ProductItem> ProductItems { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<StoreAddress> StoreAddresses { get; set; }
     }
 }

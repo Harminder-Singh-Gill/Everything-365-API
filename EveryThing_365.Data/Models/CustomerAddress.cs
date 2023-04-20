@@ -5,11 +5,6 @@ namespace Everything_365.Data.Models
 {
     public partial class CustomerAddress
     {
-        public CustomerAddress()
-        {
-            CustomerOrders = new HashSet<CustomerOrder>();
-        }
-
         public int AddressId { get; set; }
         public int? CustomerId { get; set; }
         public string? AddressLine1 { get; set; }
@@ -21,6 +16,5 @@ namespace Everything_365.Data.Models
 
         public virtual Country? Country { get; set; }
         public virtual Customer? Customer { get; set; }
-        public virtual ICollection<CustomerOrder> CustomerOrders { get; set; }
     }
 }

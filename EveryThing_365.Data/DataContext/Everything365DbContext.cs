@@ -20,24 +20,26 @@ namespace Everything_365.Data.DataContext
         public virtual DbSet<Country> Countries { get; set; } = null!;
         public virtual DbSet<Customer> Customers { get; set; } = null!;
         public virtual DbSet<CustomerAddress> CustomerAddresses { get; set; } = null!;
-        public virtual DbSet<CustomerOrder> CustomerOrders { get; set; } = null!;
         public virtual DbSet<CustomerPayment> CustomerPayments { get; set; } = null!;
         public virtual DbSet<OrderStatus> OrderStatuses { get; set; } = null!;
         public virtual DbSet<PaymentType> PaymentTypes { get; set; } = null!;
         public virtual DbSet<Product> Products { get; set; } = null!;
         public virtual DbSet<ProductCategory> ProductCategories { get; set; } = null!;
-        public virtual DbSet<ProductItem> ProductItems { get; set; } = null!;
+        public virtual DbSet<ProductConfigration> ProductConfigrations { get; set; } = null!;
+        public virtual DbSet<ProductOption> ProductOptions { get; set; } = null!;
+        public virtual DbSet<ProductVaraint> ProductVaraints { get; set; } = null!;
         public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; } = null!;
         public virtual DbSet<ShoppingCartItem> ShoppingCartItems { get; set; } = null!;
         public virtual DbSet<Store> Stores { get; set; } = null!;
         public virtual DbSet<StoreAddress> StoreAddresses { get; set; } = null!;
         public virtual DbSet<Supplier> Suppliers { get; set; } = null!;
+        public virtual DbSet<Variation> Variations { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=192.168.1.197; Database = EveryThing_365; User Id = Admin; Password =Admin123; Initial Catalog=EveryThing_365;");
+               optionsBuilder.UseSqlServer("Server=192.168.1.197; Database = EveryThing_365; User Id = Admin; Password =Admin123; Initial Catalog=EveryThing_365;");
             }
         }
 
@@ -150,59 +152,6 @@ namespace Everything_365.Data.DataContext
                     .HasConstraintName("FK__customer___custo__398D8EEE");
             });
 
-            modelBuilder.Entity<CustomerOrder>(entity =>
-            {
-                entity.HasKey(e => e.OrderId)
-                    .HasName("PK__customer__46596229E7D703C7");
-
-                entity.ToTable("customer_order");
-
-                entity.Property(e => e.OrderId).HasColumnName("order_id");
-
-                entity.Property(e => e.CustomerId).HasColumnName("customer_id");
-
-                entity.Property(e => e.OrderDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("order_date");
-
-                entity.Property(e => e.OrderStatusId).HasColumnName("order_status_id");
-
-                entity.Property(e => e.PaymentId).HasColumnName("payment_id");
-
-                entity.Property(e => e.ProductItemId).HasColumnName("product_item_id");
-
-                entity.Property(e => e.Quantity).HasColumnName("quantity");
-
-                entity.Property(e => e.ShippingId).HasColumnName("shipping_id");
-
-                entity.Property(e => e.TotalPrice).HasColumnName("total_price");
-
-                entity.HasOne(d => d.Customer)
-                    .WithMany(p => p.CustomerOrders)
-                    .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__customer___custo__0C85DE4D");
-
-                entity.HasOne(d => d.OrderStatus)
-                    .WithMany(p => p.CustomerOrders)
-                    .HasForeignKey(d => d.OrderStatusId)
-                    .HasConstraintName("FK__customer___order__10566F31");
-
-                entity.HasOne(d => d.Payment)
-                    .WithMany(p => p.CustomerOrders)
-                    .HasForeignKey(d => d.PaymentId)
-                    .HasConstraintName("FK__customer___payme__0E6E26BF");
-
-                entity.HasOne(d => d.ProductItem)
-                    .WithMany(p => p.CustomerOrders)
-                    .HasForeignKey(d => d.ProductItemId)
-                    .HasConstraintName("FK__customer___produ__0D7A0286");
-
-                entity.HasOne(d => d.Shipping)
-                    .WithMany(p => p.CustomerOrders)
-                    .HasForeignKey(d => d.ShippingId)
-                    .HasConstraintName("FK__customer___shipp__0F624AF8");
-            });
-
             modelBuilder.Entity<CustomerPayment>(entity =>
             {
                 entity.HasKey(e => e.PaymentId)
@@ -274,27 +223,31 @@ namespace Everything_365.Data.DataContext
             {
                 entity.ToTable("product");
 
-                entity.HasIndex(e => e.ProductName, "UQ__product__2B5A6A5FA566C710")
-                    .IsUnique();
-
                 entity.Property(e => e.ProductId).HasColumnName("product_id");
 
                 entity.Property(e => e.CategoryId).HasColumnName("category_id");
 
-                entity.Property(e => e.ProductDescription)
+                entity.Property(e => e.Description)
                     .HasMaxLength(300)
                     .IsUnicode(false)
-                    .HasColumnName("product_description");
+                    .HasColumnName("description");
 
-                entity.Property(e => e.ProductName)
-                    .HasMaxLength(30)
+                entity.Property(e => e.StoreId).HasColumnName("store_id");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(50)
                     .IsUnicode(false)
-                    .HasColumnName("product_name");
+                    .HasColumnName("title");
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK__product__categor__60A75C0F");
+                    .HasConstraintName("FK__product__categor__00DF2177");
+
+                entity.HasOne(d => d.Store)
+                    .WithMany(p => p.Products)
+                    .HasForeignKey(d => d.StoreId)
+                    .HasConstraintName("FK__product__store_i__01D345B0");
             });
 
             modelBuilder.Entity<ProductCategory>(entity =>
@@ -322,52 +275,117 @@ namespace Everything_365.Data.DataContext
                     .HasConstraintName("FK__product_c__paren__59FA5E80");
             });
 
-            modelBuilder.Entity<ProductItem>(entity =>
+            modelBuilder.Entity<ProductConfigration>(entity =>
             {
-                entity.ToTable("product_item");
+                entity.ToTable("product_configration");
 
-                entity.Property(e => e.ProductItemId).HasColumnName("product_item_id");
+                entity.HasIndex(e => new { e.ProductOptionId, e.ProductVaraintId }, "UQ__product___FBA6A137C53D71EB")
+                    .IsUnique();
 
-                entity.Property(e => e.Price).HasColumnName("price");
+                entity.Property(e => e.ProductConfigrationId).HasColumnName("product_configration_id");
+
+                entity.Property(e => e.ProductOptionId).HasColumnName("product_option_id");
+
+                entity.Property(e => e.ProductVaraintId).HasColumnName("product_varaint_id");
+
+                entity.HasOne(d => d.ProductOption)
+                    .WithMany(p => p.ProductConfigrations)
+                    .HasForeignKey(d => d.ProductOptionId)
+                    .HasConstraintName("FK__product_c__produ__6BAEFA67");
+
+                entity.HasOne(d => d.ProductVaraint)
+                    .WithMany(p => p.ProductConfigrations)
+                    .HasForeignKey(d => d.ProductVaraintId)
+                    .HasConstraintName("FK__product_c__produ__6ABAD62E");
+            });
+
+            modelBuilder.Entity<ProductOption>(entity =>
+            {
+                entity.ToTable("product_option");
+
+                entity.HasIndex(e => new { e.VariationId, e.OptionValue }, "UQ__product___B52534162602E3D6")
+                    .IsUnique();
+
+                entity.Property(e => e.ProductOptionId).HasColumnName("product_option_id");
+
+                entity.Property(e => e.OptionValue)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("option_value");
+
+                entity.Property(e => e.Position).HasColumnName("position");
 
                 entity.Property(e => e.ProductId).HasColumnName("product_id");
 
-                entity.Property(e => e.QtyInStock).HasColumnName("qty_in_stock");
-
-                entity.Property(e => e.StoreId).HasColumnName("store_id");
+                entity.Property(e => e.VariationId).HasColumnName("variation_id");
 
                 entity.HasOne(d => d.Product)
-                    .WithMany(p => p.ProductItems)
+                    .WithMany(p => p.ProductOptions)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__product_i__produ__6754599E");
+                    .HasConstraintName("FK__product_o__produ__55BFB948");
 
-                entity.HasOne(d => d.Store)
-                    .WithMany(p => p.ProductItems)
-                    .HasForeignKey(d => d.StoreId)
-                    .HasConstraintName("FK__product_i__store__68487DD7");
+                entity.HasOne(d => d.Variation)
+                    .WithMany(p => p.ProductOptions)
+                    .HasForeignKey(d => d.VariationId)
+                    .HasConstraintName("FK__product_o__varia__56B3DD81");
+            });
+
+            modelBuilder.Entity<ProductVaraint>(entity =>
+            {
+                entity.ToTable("product_varaint");
+
+                entity.HasIndex(e => e.Sku, "UQ__product___DDDF4BE765E0FD47")
+                    .IsUnique();
+
+                entity.Property(e => e.ProductVaraintId).HasColumnName("product_varaint_id");
+
+                entity.Property(e => e.Price)
+                    .HasColumnType("decimal(18, 0)")
+                    .HasColumnName("price")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.ProductId).HasColumnName("product_id");
+
+                entity.Property(e => e.Sku)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("sku");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("title");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.ProductVaraints)
+                    .HasForeignKey(d => d.ProductId)
+                    .HasConstraintName("FK__product_v__produ__2F9A1060");
             });
 
             modelBuilder.Entity<ShoppingCart>(entity =>
             {
                 entity.HasKey(e => e.CartId)
-                    .HasName("PK__shopping__2EF52A2707556D3C");
+                    .HasName("PK__shopping__2EF52A27F64A14C1");
 
                 entity.ToTable("shopping_cart");
+
+                entity.HasIndex(e => e.CustomerId, "UQ__shopping__CD65CB8479F55EBD")
+                    .IsUnique();
 
                 entity.Property(e => e.CartId).HasColumnName("cart_id");
 
                 entity.Property(e => e.CustomerId).HasColumnName("customer_id");
 
                 entity.HasOne(d => d.Customer)
-                    .WithMany(p => p.ShoppingCarts)
-                    .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__shopping___custo__6C190EBB");
+                    .WithOne(p => p.ShoppingCart)
+                    .HasForeignKey<ShoppingCart>(d => d.CustomerId)
+                    .HasConstraintName("FK__shopping___custo__6442E2C9");
             });
 
             modelBuilder.Entity<ShoppingCartItem>(entity =>
             {
                 entity.HasKey(e => e.CartItemId)
-                    .HasName("PK__shopping__5D9A6C6E4A51217A");
+                    .HasName("PK__shopping__5D9A6C6EEF187853");
 
                 entity.ToTable("shopping_cart_item");
 
@@ -375,19 +393,19 @@ namespace Everything_365.Data.DataContext
 
                 entity.Property(e => e.CartId).HasColumnName("cart_id");
 
-                entity.Property(e => e.ProductItemId).HasColumnName("product_item_id");
+                entity.Property(e => e.ProductVaraintId).HasColumnName("product_varaint_id");
 
                 entity.Property(e => e.Quantity).HasColumnName("quantity");
 
                 entity.HasOne(d => d.Cart)
                     .WithMany(p => p.ShoppingCartItems)
                     .HasForeignKey(d => d.CartId)
-                    .HasConstraintName("FK__shopping___cart___71D1E811");
+                    .HasConstraintName("FK__shopping___cart___4D2A7347");
 
-                entity.HasOne(d => d.ProductItem)
+                entity.HasOne(d => d.ProductVaraint)
                     .WithMany(p => p.ShoppingCartItems)
-                    .HasForeignKey(d => d.ProductItemId)
-                    .HasConstraintName("FK__shopping___produ__72C60C4A");
+                    .HasForeignKey(d => d.ProductVaraintId)
+                    .HasConstraintName("FK__shopping___produ__4E1E9780");
             });
 
             modelBuilder.Entity<Store>(entity =>
@@ -434,8 +452,6 @@ namespace Everything_365.Data.DataContext
                     .HasColumnName("city");
 
                 entity.Property(e => e.CountryId).HasColumnName("country_id");
-
-                entity.Property(e => e.IsDefault).HasColumnName("is_default");
 
                 entity.Property(e => e.PostalCode)
                     .HasMaxLength(50)
@@ -499,6 +515,21 @@ namespace Everything_365.Data.DataContext
                     .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("phone_number");
+            });
+
+            modelBuilder.Entity<Variation>(entity =>
+            {
+                entity.ToTable("variation");
+
+                entity.HasIndex(e => e.Value, "UQ__variatio__40BBEA3A7B56AE87")
+                    .IsUnique();
+
+                entity.Property(e => e.VariationId).HasColumnName("variation_id");
+
+                entity.Property(e => e.Value)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("value");
             });
 
             OnModelCreatingPartial(modelBuilder);

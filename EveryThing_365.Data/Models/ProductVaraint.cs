@@ -1,26 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Everything_365.API.Models
+namespace Everything_365.Data.Models
 {
     public partial class ProductVaraint
     {
         public ProductVaraint()
         {
-            CustomerOrders = new HashSet<CustomerOrder>();
+            ProductConfigrations = new HashSet<ProductConfigration>();
             ShoppingCartItems = new HashSet<ShoppingCartItem>();
-            Variations = new HashSet<Variation>();
         }
 
         public int ProductVaraintId { get; set; }
         public int? ProductId { get; set; }
-        public int? QtyInStock { get; set; }
+        public string? Title { get; set; }
         public decimal? Price { get; set; }
         public string? Sku { get; set; }
 
         public virtual Product? Product { get; set; }
-        public virtual ICollection<CustomerOrder> CustomerOrders { get; set; }
+        public virtual ICollection<ProductConfigration> ProductConfigrations { get; set; }
         public virtual ICollection<ShoppingCartItem> ShoppingCartItems { get; set; }
-        public virtual ICollection<Variation> Variations { get; set; }
     }
 }

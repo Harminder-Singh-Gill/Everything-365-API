@@ -12,7 +12,6 @@ namespace Everything_365.Data.Models
         public string? City { get; set; }
         public string? PostalCode { get; set; }
         public int? CountryId { get; set; }
-        public bool? IsDefault { get; set; }
 
         public virtual Country? Country { get; set; }
         public virtual Store? Store { get; set; }

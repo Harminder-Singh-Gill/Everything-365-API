@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Everything_365.API.Models
+namespace Everything_365.Data.Models
 {
     public partial class VariationOption
     {
